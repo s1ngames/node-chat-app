@@ -14,14 +14,19 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('New user connected');
 
-  socket.emit('newEmail', {
-    from: 'mike@example.com',
-    text: 'Hey. What is going on.',
-    createAt: 123
-  });
+  // socket.emit('newMessage', { //SOCKET EMIT IS TO ONE PERSON
+  //   from: 'nir@example.com',
+  //   text: 'sending data to chrome',
+  //   createAt: 123
+  // });
 
-  socket.on('createEmail', (newEmail) => {
-    console.log('createEmail', newEmail);
+  socket.on('createMessage', (message) => {
+    // console.log('createMessage', message);
+    io.emit('newMessage',{//IO IS EMIT FOR EVERYONE CONNECTED
+      from:message.from,
+      text:message.text,
+      createAt:new Date().getTime()
+    });
   });
 
   socket.on('disconnect', () => {
