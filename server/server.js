@@ -20,13 +20,36 @@ io.on('connection', (socket) => {
   //   createAt: 123
   // });
 
+
+socket.emit('newMessage',{//emit from admin text welcome to chat app
+  from:'Admin',
+  text:'Welcome to the chat app'
+});
+
+//socket.broadcast.emit from admin text new user joined
+socket.broadcast.emit('newMessage',{
+  from:'Admin',
+  text:'New user joined',
+  createAt:new Date().getTime()
+});
+
+
   socket.on('createMessage', (message) => {
-    // console.log('createMessage', message);
+    console.log('createMessage', message);
     io.emit('newMessage',{//IO IS EMIT FOR EVERYONE CONNECTED
       from:message.from,
       text:message.text,
       createAt:new Date().getTime()
     });
+
+
+// socket.broadcast.emit('newMessage',{//emit to everyone exept the user sent the event
+//   from:message.from,
+//   text:message.text,
+//   createAt:new Date().getTime()
+// });
+
+
   });
 
   socket.on('disconnect', () => {
