@@ -36,6 +36,9 @@ socket.broadcast.emit('newMessage',utils.generateMessage('Admin','New user joine
 //   createAt:new Date().getTime()
 // });
 
+socket.on('createLocationMessage',(coords)=>{
+  io.emit('newLocationMessage',utils.generateLocationMessage('Admin',coords.latitude,coords.longitude));
+});
 
   socket.on('createMessage', (message, callback) => {
     console.log('createMessage', message);
